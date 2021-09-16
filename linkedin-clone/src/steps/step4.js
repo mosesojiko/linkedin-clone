@@ -1,3 +1,4 @@
+// Add the Join Now, and SignIn button
 import styled from 'styled-components';
 
 const Login = (props) => {
