@@ -1,3 +1,7 @@
+// Add Section in Login.js
+// get google logo images from the net
+// get 
+
 import styled from 'styled-components';
 
 const Login = (props) => {
@@ -115,7 +119,6 @@ h1 {
         font-size: 20px;
         width: 100%;
         line-height: 2px;
-        
     }
 }
 
@@ -124,13 +127,12 @@ img {
     width: 500px;
     margin-top: 30px;
     position: absolute;
-    
-    right: -100px;
+    bottom: -2px;
+    right: -150px;
     @media (max-width: 760px) {
         top: 235px;
         width: initial;
         position: initial;
-        margin-left: 100px
     }
 }
 `;
@@ -163,10 +165,6 @@ img {
 :hover {
     background-color: rgba(207, 207, 207, 0.2);
     color: rgba(0,0,0,0.75);
-}
-@media (max-width: 760px){
-    margin-left: 100px;
-    margin-top: 20px;
 }
 `;
 export default Login;
