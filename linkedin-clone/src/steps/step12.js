@@ -1,3 +1,76 @@
+// Let start developing these componenent
+
+/*
+1. Create 3 files in components folder, Leftside.js, Main.js, Rightside.js
+2. Replace all the divs in Home.js with the components just created.
+*/
+
+// Leftside.js
+
+import styled from 'styled-components';
+
+const Leftside = (props) =>{
+    return (
+        <Container>
+            <ArtCard>
+                Card
+            </ArtCard>
+        </Container>
+    )
+}
+
+const Container = styled.div`
+grid-area: leftside;
+`;
+
+const ArtCard = styled.div`
+text-align: center;
+overflow: hidden;
+background-color: #fff;
+margin-bottom: 8px;
+border-radius: 5px;
+transition: box-shadow 83ms;
+position: relative;
+border: none;
+/*box-shadow: 0 0 0 1px rgba(0 0 0 / 151), 0 0 0 rgba(0 0 0 / 201)*/
+`;
+export default Leftside;
+
+//Main.js
+import styled from 'styled-components';
+
+const Main = (props) =>{
+    return (
+        <Container>
+            Main
+        </Container>
+    )
+}
+
+const Container = styled.div`
+grid-area: main;
+`;
+export default Main;
+
+//Rightside.js
+import styled from 'styled-components';
+
+const Rightside = (props) =>{
+    return (
+        <Container>
+            Rightside
+        </Container>
+    )
+}
+
+const Container = styled.div`
+grid-area: rightside;
+`;
+export default Rightside;
+
+
+//Home.js
+
 import styled from 'styled-components';
 import Leftside from './Leftside';
 import Main from './Main';

@@ -1,7 +1,12 @@
+//Add the structure of the body
+
+/* 
+1. Home.js, create  Layout component
+2. Divide the page into 3 different column using the grid 
+
+*/
+
 import styled from 'styled-components';
-import Leftside from './Leftside';
-import Main from './Main';
-import Rightside from './Rightside';
 
 const Home = (props) => {
     return (
@@ -11,9 +16,9 @@ const Home = (props) => {
                 <p>Find talented pros in record time with upwork and keep business working.</p>
             </Section>
             <Layout>
-                <Leftside />
-                <Main />
-                <Rightside />
+                <div>Left side</div>
+                <div>Main</div>
+                <div>Right side</div>
             </Layout>
         </Container>
     )
@@ -60,7 +65,7 @@ const Section = styled.div`
 
 const Layout = styled.div`
   display: grid;
-  grid-template-areas: "leftside main rightside";
+  grid-template-areas: "leftSide main rigthSide";
   grid-template-columns: minmax(0, 5px), minmax(0, 12px), minmax(300px, 7px);
   column-gap: 25px;
   row-gap: 25px;
