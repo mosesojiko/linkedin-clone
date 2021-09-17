@@ -1,3 +1,11 @@
+// Add signout functionalities
+
+/* 
+1. Add signout in User component under Header.js
+2. Style SignOut, add hover styling to User component, to display the sign out.
+*/
+
+
 import styled from 'styled-components';
 
 const Header = (props) => {
