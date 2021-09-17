@@ -1,3 +1,10 @@
+// Build the Follow component, Rightside.js
+
+/*
+1. Add FollowCard to Rightside.js
+*/
+
+//modified Rightside.js
 import styled from 'styled-components';
 
 const Rightside = (props) =>{
