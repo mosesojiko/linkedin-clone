@@ -1,3 +1,9 @@
+// Add the part that says 'Hiring in a hurry'
+
+/* 
+1. Go to Home.js to do this
+*/
+
 import styled from 'styled-components';
 
 const Home = (props) => {
