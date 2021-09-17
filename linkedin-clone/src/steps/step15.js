@@ -1,3 +1,18 @@
+// Add feed follow list
+
+
+//To format on save, install prettier code formater
+//Right click on setting, select add to workspace setting
+// click on extension setting, type format in search bar, select prettier in default code formatter
+// select format on save
+
+/*
+1. Rightside.js, add a feed followlist
+2. Also add a recommendation component
+3. Add the BannerCard underneath the FollowCard
+ */
+
+// Rightside.js
 import styled from 'styled-components';
 
 const Rightside = (props) =>{
