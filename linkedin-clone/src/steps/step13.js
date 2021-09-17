@@ -1,3 +1,10 @@
+//Build the userinfo 
+
+/*
+1. Working ArtCard component on Leftside.js
+2. Working CommunityCard component on Leftside.js
+ */
+
 import styled from 'styled-components';
 
 const Leftside = (props) =>{
