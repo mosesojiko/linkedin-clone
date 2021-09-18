@@ -1,3 +1,19 @@
+// Add a CommonCard component
+
+/* 
+1. inside of Main.js, add a CommonCard styling
+2. Create a shareBox component in Main.js
+3. Create SharedActor component
+4. Add description
+5. Create SharedImg component
+6. Create SocialCount component
+7. Add social icons to the shared image
+
+*/
+
+
+// Main.js
+
 import styled from 'styled-components';
 
 const Main = (props) =>{
