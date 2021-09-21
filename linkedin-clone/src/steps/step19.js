@@ -1,3 +1,71 @@
+// Install needed tools
+
+/* 
+1. install firebase, npm install firebase
+2. Also install firebase-tools, npm install firebase-tools
+3. npm install redux-thunk
+4. Go to firebase.com, create a project
+5. Still on firebase.com, go to project settings, go down, click on config and copy the configuration settings.
+6. Create firebase.js under src, and paste the config files
+7. Initialize the firebase app
+8. Go to index.js under store, and make modifications
+9. Create a folder called actions in src, then create index.js file
+10. modify Login.js to make it work
+11. go to firebase.com, authentication,get started, google, enable it and save
+*/
+
+// firebase.js
+import firebase from 'firebase';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAMdxfH5XI9C_V2DU5GxFJBm-YQIdssSxQ",
+  authDomain: "linkedin-clone-de7c4.firebaseapp.com",
+  projectId: "linkedin-clone-de7c4",
+  storageBucket: "linkedin-clone-de7c4.appspot.com",
+  messagingSenderId: "54004410567",
+  appId: "1:54004410567:web:4fa35f880a7f2e5a2cb6e2",
+  measurementId: "G-6WEZW5M3DV"
+};
+// Initialize app
+  const firebaseApp = firebase.initializeApp(firebaseConfig);
+// Connect to database
+  const db = firebaseApp.firestore();
+// Get google authentication
+  const auth = firebase.auth();
+  const provider = new firebase.auth.GoogleAuthProvider();
+  // Connect to storage expecially to store images
+  const storage = firebase.storage()
+
+  export { auth, provider, storage };
+  export default db;
+
+//modify index.js under store folder
+import { createStore, applyMiddleware } from 'redux';
+
+import thunkMiddleware from 'redux-thunk'
+
+import  rootReducer  from '../reducers';
+
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+
+export default store;
+
+
+//index.js under actions folder
+import { auth, provider } from '../firebase';
+
+
+export function signInApi() {
+    return (dispatch) => {
+        auth.signInWithPopup(provider)
+        .then((payload) => {
+            console.log(payload)
+        })
+        .catch((error) => alert(error.message))
+    }
+}
+
+// modify Login.js
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { signInApi } from '../actions';
