@@ -1,3 +1,12 @@
+// Add a little animation to modal
+
+/* 
+1. Add animation name to 'Container' styling in PostModal.js
+2. index.css, and add some styling
+*/
+
+//modify PostModal.js
+
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -204,3 +213,48 @@ input {
 }
 `;
 export default PostModal;
+
+// modify index.css
+/* display the vertical scroll on overflow, hide the bottom scroll on overflow */
+body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  #root, body, html {
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+  }
+  
+  div, h1, h2, h3, h4, h5, h6, header, html, i, img, label, li, nav, p, small, span, ol {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+  }
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* animate modal */
+  @-webkit-keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
