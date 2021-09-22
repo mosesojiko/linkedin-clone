@@ -1,3 +1,139 @@
+// Using raect hook, useEffect to get the articles from firebase
+
+/* 
+1. Add a new funtion getArticlesApi in actions/index.js
+2. import getArticlesApi in Main.js, and add a useEffect, also add it to the dispatch at the bottom of Main.js
+3. dispatch articles to the store, ceate an action in actions/actionType.js, add it to Main
+
+*/
+
+// modify actions/index.js
+import { auth, provider, storage } from '../firebase';
+import db from '../firebase';
+import { GET_ARTICLES, SET_LOADING_STATUS, SET_USER } from './actionType';
+
+
+export const setUser = (payload) => ({
+    type: SET_USER,
+    user: payload,
+})
+
+//set loading function
+export const setLoading = (status) => ({
+    type: SET_LOADING_STATUS,
+    status: status,
+})
+
+//get articles
+
+export const getArticles = (payload) => ({
+    type: GET_ARTICLES,
+    payload: payload,
+})
+
+
+export function signInApi() {
+    return (dispatch) => {
+        auth.signInWithPopup(provider)
+        .then((payload) => {
+            dispatch(setUser(payload.user))
+        })
+        .catch((error) => alert(error.message))
+    }
+}
+
+//function to store the user info
+export function getUserAuth() {
+    return (dispatch) => {
+        auth.onAuthStateChanged(async (user) =>{
+            if(user) {
+                dispatch(setUser(user))
+            }
+        })
+    }
+}
+
+// signout function
+export function signOutApi() {
+    return (dispatch) => {
+        auth.signOut().then(()=>{
+            dispatch(setUser(null))
+        }).catch(error =>{
+            console.log(error)
+        })
+    }
+}
+
+//post images to firebase
+export function postArticleApi(payload) {
+    return (dispatch) => {
+        dispatch(setLoading(true))
+
+        if(payload.image !== "") {
+            const upload = storage
+            .ref(`/images/${payload.image.name}`)
+            .put(payload.image);
+            upload.on('state_changed',
+            (snapshot) => {
+                const progress = ( (snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                console.log(`Progress: ${progress}%`);
+                if(snapshot.state === 'RUNNING'){
+                    console.log(`Progress: ${progress}%`);
+                }
+            }, 
+            error => {console.log(error.code)},
+            async () => {
+                const downloadURL = await upload.snapshot.ref.getDownloadURL();
+                db.collection('articles').add({
+                    actor: {
+                        description: payload.user.email,
+                        title: payload.user.displayName,
+                        date: payload.timestamp,
+                        image: payload.user.photoURL,
+                    },
+                    video: payload.video,
+                    sharedImg: downloadURL,
+                    comments: 0,
+                    description: payload.description
+                });
+                //reset the loading
+            dispatch(setLoading(false))
+            }
+            );
+            
+        }else if (payload.video) {
+            db.collection('articles').add({
+                actor: {
+                    description: payload.user.email,
+                    title: payload.user.displayName,
+                    date: payload.timestamp,
+                    image: payload.user.photoURL,
+                },
+                video: payload.video,
+                sharedImg: '',
+                comments: 0,
+                description: payload.description
+            });
+            //reset the loading
+            dispatch(setLoading(false))
+        }
+    };
+}
+
+//fetch articles from firebase
+export function getArticlesApi() {
+    return (dispatch) => {
+        let payload;
+
+        db.collection('articles').orderBy('actor.date', 'desc')
+        .onSnapshot((snapshot) =>{
+            payload = snapshot.docs.map((doc) => doc.data());
+            dispatch(getArticles(payload))
+        })
+    }
+}
+
+// modify Main.js
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -342,3 +478,38 @@ const mapDispatchToProps = (dispatch) => ({
     getArticles: () => dispatch(getArticlesApi())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
+
+// modify actions/actionType.js
+export const SET_USER = 'SET_USER';
+
+export const SET_LOADING_STATUS = 'SET_LOADING_STATUS'
+export const GET_ARTICLES = "GET_ARTICLES";
+
+
+// modify reducers/articleReducer.js
+import { GET_ARTICLES, SET_LOADING_STATUS } from "../actions/actionType";
+
+export const initState = {
+    articles: [],
+    loading: false
+}
+
+const articleReducer = (state = initState, action) => {
+    switch(action.type) {
+        case GET_ARTICLES:
+            return {
+                ...state,
+                articles: action.payload
+            }
+        case SET_LOADING_STATUS: 
+        return {
+            ...state,
+            loading: action.status
+        }
+        default: 
+        return state;
+    }
+}
+
+
+export default articleReducer;
