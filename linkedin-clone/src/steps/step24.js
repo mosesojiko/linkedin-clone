@@ -1,3 +1,10 @@
+// Let's work on text editor
+
+/*
+1. in PostModal, import useState from react, import useState from react
+*/
+
+// modify PostModal
 import { useState } from 'react';
 import styled from 'styled-components';
 
