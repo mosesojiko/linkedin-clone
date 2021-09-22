@@ -1,3 +1,11 @@
+// Add a react player to show videos
+
+/*
+1. npm install react-player, and import it in PostModal.js
+2. Create a variable for videoLink
+*/
+
+// modify PostModal.js
 import { useState } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
