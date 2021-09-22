@@ -1,11 +1,17 @@
 import { auth, provider, storage } from '../firebase';
 import db from '../firebase';
-import { SET_USER } from './actionType';
+import { SET_LOADING_STATUS, SET_USER } from './actionType';
 
 
 export const setUser = (payload) => ({
     type: SET_USER,
     user: payload,
+})
+
+//set loading function
+export const setLoading = (status) => ({
+    type: SET_LOADING_STATUS,
+    status: status,
 })
 
 
@@ -44,6 +50,8 @@ export function signOutApi() {
 //post images to firebase
 export function postArticleApi(payload) {
     return (dispatch) => {
+        dispatch(setLoading(true))
+
         if(payload.image !== "") {
             const upload = storage
             .ref(`/images/${payload.image.name}`)
@@ -71,6 +79,8 @@ export function postArticleApi(payload) {
                     comments: 0,
                     description: payload.description
                 });
+                //reset the loading
+            dispatch(setLoading(false))
             }
             );
             
@@ -86,7 +96,9 @@ export function postArticleApi(payload) {
                 sharedImg: '',
                 comments: 0,
                 description: payload.description
-            })
+            });
+            //reset the loading
+            dispatch(setLoading(false))
         }
     };
 }

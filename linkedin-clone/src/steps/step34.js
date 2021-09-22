@@ -1,3 +1,165 @@
+// Pulling the articles and showing the user
+
+/* 
+1. Add an article reducer
+In reducers folder, create a file called articleReducer.js
+2. reducers/index.js, and add the articleReducer
+3. Show the loading bar on upload 
+4. Declare an action for loading, actions/actionType.js
+5. actions/index.js, and add a setLoading function, also modify postArticleApi function
+6. add a spinning logo/gif
+7. Main.js, ShareBox component, add the gif
+8. add a <Content> component under the ShareBox component
+9. Wrap article inside Content component instead od div
+*/
+
+
+//create reducers/articleReducer.js
+import { SET_LOADING_STATUS } from "../actions/actionType";
+
+export const initState = {
+    loading: false
+}
+
+const articleReducer = (state = initState, action) => {
+    switch(action.type) {
+        case SET_LOADING_STATUS: 
+        return {
+            ...state,
+            loading: action.status
+        }
+        default: 
+        return state;
+    }
+}
+
+
+export default articleReducer;
+
+// modify reducers/index.js
+import { combineReducers } from "redux";
+import articleReducer from "./articleReducer";
+import  userReducer  from "./userReducer";
+
+ const rootReducer = combineReducers({
+     userState: userReducer,
+     articleState: articleReducer,
+});
+
+export default rootReducer;
+
+//modify actions/actionType.js
+export const SET_USER = 'SET_USER';
+
+export const SET_LOADING_STATUS = 'SET_LOADING_STATUS'
+
+// modify actions/index.js
+import { auth, provider, storage } from '../firebase';
+import db from '../firebase';
+import { SET_LOADING_STATUS, SET_USER } from './actionType';
+
+
+export const setUser = (payload) => ({
+    type: SET_USER,
+    user: payload,
+})
+
+//set loading function
+export const setLoading = (status) => ({
+    type: SET_LOADING_STATUS,
+    status: status,
+})
+
+
+export function signInApi() {
+    return (dispatch) => {
+        auth.signInWithPopup(provider)
+        .then((payload) => {
+            dispatch(setUser(payload.user))
+        })
+        .catch((error) => alert(error.message))
+    }
+}
+
+//function to store the user info
+export function getUserAuth() {
+    return (dispatch) => {
+        auth.onAuthStateChanged(async (user) =>{
+            if(user) {
+                dispatch(setUser(user))
+            }
+        })
+    }
+}
+
+// signout function
+export function signOutApi() {
+    return (dispatch) => {
+        auth.signOut().then(()=>{
+            dispatch(setUser(null))
+        }).catch(error =>{
+            console.log(error)
+        })
+    }
+}
+
+//post images to firebase
+export function postArticleApi(payload) {
+    return (dispatch) => {
+        dispatch(setLoading(true))
+
+        if(payload.image !== "") {
+            const upload = storage
+            .ref(`/images/${payload.image.name}`)
+            .put(payload.image);
+            upload.on('state_changed',
+            (snapshot) => {
+                const progress = ( (snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+                console.log(`Progress: ${progress}%`);
+                if(snapshot.state === 'RUNNING'){
+                    console.log(`Progress: ${progress}%`);
+                }
+            }, 
+            error => {console.log(error.code)},
+            async () => {
+                const downloadURL = await upload.snapshot.ref.getDownloadURL();
+                db.collection('articles').add({
+                    actor: {
+                        description: payload.user.email,
+                        title: payload.user.displayName,
+                        date: payload.timestamp,
+                        image: payload.user.photoURL,
+                    },
+                    video: payload.video,
+                    sharedImg: downloadURL,
+                    comments: 0,
+                    description: payload.description
+                });
+                //reset the loading
+            dispatch(setLoading(false))
+            }
+            );
+            
+        }else if (payload.video) {
+            db.collection('articles').add({
+                actor: {
+                    description: payload.user.email,
+                    title: payload.user.displayName,
+                    date: payload.timestamp,
+                    image: payload.user.photoURL,
+                },
+                video: payload.video,
+                sharedImg: '',
+                comments: 0,
+                description: payload.description
+            });
+            //reset the loading
+            dispatch(setLoading(false))
+        }
+    };
+}
+
+// modify Main.js
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
