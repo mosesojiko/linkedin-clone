@@ -1,3 +1,11 @@
+// disable the Post button when editorText is empty
+
+/* 
+1. PostModal.js, add disabled to the post button
+2. Add some styling to the PostButton component
+*/
+
+// modify PostModal.js
 import { useState } from 'react';
 import styled from 'styled-components';
 
