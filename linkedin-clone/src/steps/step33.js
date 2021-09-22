@@ -1,3 +1,11 @@
+// Post video to firebase
+
+/* 
+1. Add an else if, to the postArticleApi function, actions/index.js
+*/
+
+
+// modify actions/index.js
 import { auth, provider, storage } from '../firebase';
 import db from '../firebase';
 import { SET_USER } from './actionType';
