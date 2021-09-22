@@ -1,3 +1,13 @@
+// Switch between shareImage or shareVideo
+
+/*
+1. in PostModal.js, declare a variable for assetArea
+2. Add a few more things in the reset function. Add it above the props.handleClick
+3. Do a couple of things below <textarea />
+4. Add onClick to the AssetButton
+*/
+
+// modify PostModal.js
 import { useState } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
