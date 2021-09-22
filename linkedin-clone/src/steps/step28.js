@@ -1,3 +1,12 @@
+// Add file input for uploading images
+
+/*
+1. PostModal.js, declare shareImage variable
+2. Write an handleChange function
+3. Add UploadImage component
+*/
+
+// modify PostModal.js
 import { useState } from 'react';
 import styled from 'styled-components';
 
