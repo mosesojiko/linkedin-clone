@@ -1,3 +1,11 @@
+// Connect with our store and get user info
+
+/* 
+1. import connect to PostModal, and do mapStateToProps ...
+2. Display the user info to UserInfo component
+*/
+
+// modify PostModal.js
 import { useState } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player';
