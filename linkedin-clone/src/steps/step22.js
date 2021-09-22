@@ -1,3 +1,11 @@
+// Display username next to user profile
+
+/*
+1. Leftside.js, modify 'welcome there'
+*/
+
+
+// modify Leftside.js
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
