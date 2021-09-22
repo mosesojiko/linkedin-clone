@@ -4,12 +4,21 @@ import styled from 'styled-components';
 
  const PostModal = (props) => {
      const [ editorText, setEditorText ] = useState("");
+     //reset postModal
+     const reset = (e) =>{
+         setEditorText("");
+         props.handleClick(e);
+     }
     return (
+        <>
+        { props.showModal === 'open' &&
         <Container>
             <Content>
                 <Header>
                     <h2>Create a post</h2>
-                    <button><img src="/images/close.png" alt="" /></button>
+                    <button onClick ={(event) =>reset(event)}>
+                        <img src="/images/close.png" alt="" />
+                    </button>
                 </Header>
                 <SharedContent>
                     <UserInfo>
@@ -43,6 +52,8 @@ import styled from 'styled-components';
                 </ShareCreation>
             </Content>
         </Container>
+        }
+     </>
     )
 }
 
@@ -88,6 +99,10 @@ button {
     width: 40px;
     min-width: auto;
     color: rgba(0,0,0,0.15);
+}
+img {
+    pointer-events: none;
+    width: 40px;
 }
 `;
 
