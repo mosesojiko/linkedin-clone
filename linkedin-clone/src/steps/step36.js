@@ -1,3 +1,11 @@
+// Hide the main content until there are articles
+
+/*
+1. In Main.js, wrap the whole Container in <></>, then conditionally render the articles
+*/
+
+
+// modify Main.js
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
