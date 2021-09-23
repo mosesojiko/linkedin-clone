@@ -1,3 +1,14 @@
+// Display the articles we get back from firebase
+
+/*
+1. In Main.js, where the spinner is being loaded, just before Articles component
+Map through the articles, and render the Article component inside the map function.
+2. Edit the Article, and replace images and others with those from firebase.
+3. Change the hardcoded comments too
+*/
+
+// modify Main.js
+
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
