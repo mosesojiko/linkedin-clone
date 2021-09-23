@@ -1,3 +1,11 @@
+// Add some more styling
+
+/*
+1. In Main.js, SocialCounts > button
+2. SocialActions > button
+*/
+
+//modify Main.js
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
