@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { signInApi } from '../actions';
+import { signInAPI } from '../actions';
 import { Redirect } from 'react-router';
 const Login = (props) => {
     return (
@@ -183,7 +183,7 @@ const mapStateToProps = (state) =>{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    signIn: () => dispatch(signInApi())
+    signIn: () => dispatch(signInAPI())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

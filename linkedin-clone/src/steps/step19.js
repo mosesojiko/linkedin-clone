@@ -13,6 +13,7 @@
 10. modify Login.js to make it work
 11. go to firebase.com, authentication,get started, google, enable it and save
 */
+// note that firebase could not be resolved until i install this version "firebase": "^8.6.7"
 
 // firebase.js
 import firebase from 'firebase';

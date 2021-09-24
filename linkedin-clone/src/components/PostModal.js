@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import firebase from 'firebase';
 
 import { connect } from 'react-redux';
-import { postArticleApi } from '../actions';
+import { postArticleAPI } from '../actions';
 
 
  const PostModal = (props) => {
@@ -298,6 +298,6 @@ const mapStateToProps = (state) => {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    postArticle: (payload) => dispatch(postArticleApi(payload))
+    postArticle: (payload) => dispatch(postArticleAPI(payload))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
